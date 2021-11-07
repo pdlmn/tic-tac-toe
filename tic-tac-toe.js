@@ -1,5 +1,17 @@
-// creates players, return players
-const players = (function() {
+const settings = (function() {
+  const markSelectionDiv = document.querySelector('[id="mark-select"]');
+  const gameStartButton = document.querySelector('#game-start');
+  let gameStarted = false;
+  let selectedMark;
+  let player;
+  let computer;
+
+  init();
+
+  function changeSelectedMark() {
+    selectedMark = document.querySelector('input[name="mark-select"]:checked').value;
+  }
+
   function Player(name, mark) {
     let theirTurn = (mark === 'x');
     function startTurn() {
@@ -11,14 +23,31 @@ const players = (function() {
     return { name, mark, theirTurn, startTurn, endTurn };
   }
 
-  let player = Player('Player', 'x');
-  let computer = Player('Computer', 'o');
+  function startGame() {
+    gameStarted = true;
+    player = Player('Player', 'x');
+    computer = Player('Computer', 'o');
+    console.log(player)
+  }
+
+  function delegateMarkSelectionEvents() {
+    markSelectionDiv.addEventListener('click', e => {
+      if (e.target.matches('input[type="radio"]')) {
+        changeSelectedMark();
+      }
+    });
+  }
+
+  function init() {
+    delegateMarkSelectionEvents();
+    gameStartButton.addEventListener('click', startGame);
+  }
 
   return { player, computer }
 })();
 
 // contorls game flow
-const gameContoller = (function({ player, computer }) {
+const gameController = (function({ player, computer }) {
   const board = document.getElementById('gameboard');
   let nextMark = 'x';
   let boardState = [
@@ -91,4 +120,4 @@ const gameContoller = (function({ player, computer }) {
     render();
     delegateBoardEvents();
   }
-})(players);
+})(settings);
