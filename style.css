@@ -1,8 +1,79 @@
-main {
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  height: 100vh;
+  background: rgb(210, 210, 210);
+  color: white;
+}
+
+body,
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  justify-content: center;
+  align-items: center;
+  margin: 24px;
+}
+
+header,
+footer {
+  background: rgb(60, 60, 150);
+  text-align: center;
+}
+
+footer {
+  padding: 24px;
+  height: 100%;
+}
+
+.options {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background: rgb(60, 60, 150);
+  width: 300px;
+  border: 2px solid rgb(100, 100, 200);
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.radio-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.radio-button {
+  margin: 0px 12px;
+  font-size: 1.4rem;
+}
+
+.options,
+#mark-info,
+.ai,
+.button,
+.not-started,
+.started {
+  margin-bottom: 4px;
+}
+
+.button {
+  background: rgb(150, 60, 60);
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: 1px solid rgb(120, 120, 210);
+  border-radius: 4px;
+  width: 150px;
+}
+
+.button:disabled {
+  background: rgb(150, 150, 150);
 }
 
 .gameboard {
@@ -15,13 +86,32 @@ main {
 .cell {
   width: 100px;
   height: 100px;
-  outline: 1px solid black;
-  background: rgb(100, 100, 100);
+  border: 2px solid rgb(210, 210, 210);
+  border-radius: 6px;
+  box-sizing: border-box;
+  background: rgb(50, 50, 50);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  user-select: none;
+}
+
+.x {
+  color: rgb(250, 60, 60);
+}
+
+.o {
+  color: rgb(250, 250, 0);
 }
 
 .cell:hover {
-  background: rgb(120, 120, 120);
-  outline: 1px solid black;
+  background: rgb(60, 60, 60);
+}
+
+.not-started,
+.started {
+  color: black;
 }
 
 .not-started {
@@ -32,3 +122,11 @@ main {
   background: rgb(150, 150, 200);
 }
 
+#winner-info {
+  height: 30px;
+  padding: 4px;
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #82487F;
+}

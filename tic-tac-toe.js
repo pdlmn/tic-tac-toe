@@ -2,6 +2,7 @@ const DOM = (function() {
   const markSelectionDiv = document.querySelector('#mark-select');
   const markSelectionInputs = document.querySelectorAll('input[name="mark-select"]');
   const markInfoDiv = document.querySelector('#mark-info');
+  const aiCheckBox = document.querySelector('#ai');
   const startGameButton = document.querySelector('#game-start');
   const gameStartInfoDiv = document.querySelector('#game-start-info');
   const winnerInfoDiv = document.querySelector('#winner-info');
@@ -11,6 +12,7 @@ const DOM = (function() {
     markSelectionDiv,
     markSelectionInputs,
     markInfoDiv, 
+    aiCheckBox,
     startGameButton,
     gameStartInfoDiv,
     winnerInfoDiv,
@@ -51,7 +53,13 @@ const players = (function() {
     this.playerTwo.theirTurn = (this.playerTwo.mark === 'x');
   }
 
-  return { playerOne, playerTwo, changeMark, turnHandler, resetTurns }
+  return {
+    playerOne,
+    playerTwo,
+    changeMark,
+    turnHandler,
+    resetTurns 
+  }
 })();
 
 const gameBoard = (function() {
@@ -69,6 +77,7 @@ const gameBoard = (function() {
       cell.classList.add('cell');
       if (boardState[i] === 'x' || boardState[i] === 'o') {
         cell.textContent = boardState[i];
+        cell.classList.add(boardState[i]);
       }
       DOM.board.appendChild(cell);
     }
@@ -80,6 +89,19 @@ const gameBoard = (function() {
       let nextMark = players.turnHandler();
       boardState[index] = nextMark;
       render();
+      console.log(boardState)
+    }
+  }
+
+  function placeAIMark() {
+    if (settings.gameStarted === true) {
+      let randomSpot = Math.ceil(Math.random() * 9) - 1;
+      while (boardState[randomSpot] !== 0 && boardState.includes(0)) {
+        randomSpot = Math.ceil(Math.random() * 9) - 1;
+      }
+      boardState[randomSpot] = players.turnHandler();
+      render();
+      console.log(boardState)
     }
   }
 
@@ -128,13 +150,25 @@ const gameBoard = (function() {
       if (e.target.matches('.cell') && !e.target.textContent) {
         placeMark(e);
         checkForWin(players.playerOne);
+
+        if (DOM.aiCheckBox.checked) {
+          placeAIMark();
+        }
+
         checkForWin(players.playerTwo);
-        checkForDraw();
+
+        if (settings.gameStarted) {
+          checkForDraw();
+        }
       }
     });
   }
 
-  return { delegateBoardEvents, render, resetBoard }
+  return {
+    delegateBoardEvents,
+    render,
+    resetBoard
+  }
 })();
 
 const settings = (function() {
@@ -146,7 +180,7 @@ const settings = (function() {
     DOM.gameStartInfoDiv.classList.add('started');
     DOM.gameStartInfoDiv.classList.remove('not-started');
     DOM.startGameButton.disabled = true;
-    DOM.startGameButton.textContent = 'Game is ongoing';
+    DOM.startGameButton.textContent = 'Ongoing...';
     DOM.winnerInfoDiv.textContent = '';
     DOM.markSelectionInputs.forEach(input => input.disabled = true)
     players.resetTurns();
@@ -163,22 +197,53 @@ const settings = (function() {
     DOM.markSelectionInputs.forEach(input => input.disabled = false)
   }
 
+  function disableStartButton() {
+    const checkedMark = document.querySelector('input[type="radio"]:checked'); 
+    if (!checkedMark) {
+      DOM.startGameButton.disabled = true;
+    }
+  }
+
+  function enableStartButton() {
+    const checkedMark = document.querySelector('input[type="radio"]:checked'); 
+    if (checkedMark) {
+      DOM.startGameButton.disabled = false;
+    }
+  }
+
+  function displaySelection() {
+    const checkedMark = document.querySelector('input[type="radio"]:checked');
+    if (!checkedMark) return
+
+    DOM.markInfoDiv.innerHTML = `You selected <span class="${checkedMark.value}">${checkedMark.value}</span>.`
+  }
+
   function delegateMarkSelectionEvents() {
     DOM.markSelectionDiv.addEventListener('click', e => {
       if (e.target.matches('input[type="radio"]')) {
         let mark = e.target.value;
         players.changeMark(mark);
-        DOM.markInfoDiv.innerHTML = `You chose <span class="">${mark}</span>.`;
+        enableStartButton();
+        displaySelection();
       }
     });
   }
 
-  return { gameStarted, startGame, endGame, delegateMarkSelectionEvents }
+  return {
+    gameStarted,
+    startGame,
+    endGame,
+    disableStartButton,
+    displaySelection,
+    delegateMarkSelectionEvents
+  }
 })();
 
-const game = (function() {
+const init = (function() {
   gameBoard.delegateBoardEvents();
   gameBoard.render();
+  settings.disableStartButton();
+  settings.displaySelection();
   settings.delegateMarkSelectionEvents();
   DOM.startGameButton.addEventListener('click', () => settings.startGame());
 })();

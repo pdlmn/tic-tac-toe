@@ -11,41 +11,48 @@
     <h1>Tic-tac-toe</h1>
   </header>
   
-  <main>
+  <main class="content">
 
     <div class="options">
 
-      <div id="mark-select">
-        <input type="radio" name="mark-select" id="x-radio" value="x">
-        <label for="x-radio">x</label>
-
-        <input type="radio" name="mark-select" id="o-radio" value="o">
-        <label for="o-radio">o</label>
+      <div id="mark-select" class="radio-buttons">
+        <div class="radio-button">
+          <input type="radio" name="mark-select" id="x-radio" value="x">
+          <label for="x-radio" class="x">x</label>
+        </div>
+        <div class="radio-button">
+          <input type="radio" name="mark-select" id="o-radio" value="o">
+          <label for="o-radio" class="o">o</label>
+        </div>
       </div>
 
       <div id="mark-info">
         Please, select a mark.
+      </div>  
+
+      <div class="ai">
+        <label for="ai">Replace player two with AI?</label>
+        <input type="checkbox" id="ai" placeholder="AI">
       </div>
 
-      <button id="game-start">
+      <div id="game-start-info" class="not-started">
+        Game has been not started yet.
+      </div>
+
+      <button id="game-start" class="button">
         Start game
       </button>
 
     </div>
 
-    <div>
+    <div class="game">
 
-    <div id="game-start-info" class="not-started">
-      Game has been not started yet.
-    </div>
+      <div class="gameboard" id="gameboard">
+      </div>
 
-    <div id ="winner-info" class="">
+      <div id ="winner-info">
+      </div>
 
-    </div>
-
-    </div>
-
-    <div class="gameboard" id="gameboard">
     </div>
 
   </main>
