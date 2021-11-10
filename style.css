@@ -8,9 +8,16 @@ body {
 }
 
 body,
-.content {
+.content,
+.options {
   display: flex;
   flex-direction: column;
+}
+
+.radio-buttons,
+.gameboard,
+.cell {
+  display: flex;
 }
 
 .content {
@@ -20,22 +27,15 @@ body,
 }
 
 header,
-footer {
+footer,
+.options {
   background: rgb(60, 60, 150);
   text-align: center;
 }
 
-footer {
-  padding: 24px;
-  height: 100%;
-}
-
 .options {
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  background: rgb(60, 60, 150);
   width: 300px;
   border: 2px solid rgb(100, 100, 200);
   border-radius: 4px;
@@ -43,7 +43,6 @@ footer {
 }
 
 .radio-buttons {
-  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -60,6 +59,19 @@ footer {
 .not-started,
 .started {
   margin-bottom: 4px;
+}
+
+.not-started,
+.started {
+  color: black;
+}
+
+.not-started {
+  background: rgb(200, 150, 150);
+}
+
+.started {
+  background: rgb(150, 150, 200);
 }
 
 .button {
@@ -79,7 +91,6 @@ footer {
 .gameboard {
   width: 300px;
   height: 300px;
-  display: flex;
   flex-wrap: wrap;
 }
 
@@ -90,7 +101,6 @@ footer {
   border-radius: 6px;
   box-sizing: border-box;
   background: rgb(50, 50, 50);
-  display: flex;
   justify-content: center;
   align-items: center;
   font-size: 6rem;
@@ -109,19 +119,6 @@ footer {
   background: rgb(60, 60, 60);
 }
 
-.not-started,
-.started {
-  color: black;
-}
-
-.not-started {
-  background: rgb(200, 150, 150);
-}
-
-.started {
-  background: rgb(150, 150, 200);
-}
-
 #winner-info {
   height: 30px;
   padding: 4px;
@@ -130,3 +127,9 @@ footer {
   font-weight: bold;
   color: #82487F;
 }
+
+footer {
+  padding: 24px;
+  height: 100%;
+}
+

@@ -150,13 +150,14 @@ const gameBoard = (function() {
       if (e.target.matches('.cell') && !e.target.textContent) {
         placeMark(e);
         checkForWin(players.playerOne);
+        if (settings.gameStarted) {
+          checkForDraw();
+        }
 
         if (DOM.aiCheckBox.checked) {
           placeAIMark();
         }
-
         checkForWin(players.playerTwo);
-
         if (settings.gameStarted) {
           checkForDraw();
         }
