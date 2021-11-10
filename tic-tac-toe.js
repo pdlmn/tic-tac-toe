@@ -180,6 +180,7 @@ const settings = (function() {
     DOM.gameStartInfoDiv.classList.add('started');
     DOM.gameStartInfoDiv.classList.remove('not-started');
     DOM.startGameButton.disabled = true;
+    DOM.aiCheckBox.disabled = true;
     DOM.startGameButton.textContent = 'Ongoing...';
     DOM.winnerInfoDiv.textContent = '';
     DOM.markSelectionInputs.forEach(input => input.disabled = true)
@@ -193,6 +194,7 @@ const settings = (function() {
     DOM.gameStartInfoDiv.classList.remove('started');
     DOM.gameStartInfoDiv.classList.add('not-started');
     DOM.startGameButton.disabled = false;
+    DOM.aiCheckBox.disabled = false;
     DOM.startGameButton.textContent = 'Restart game';
     DOM.markSelectionInputs.forEach(input => input.disabled = false)
   }
